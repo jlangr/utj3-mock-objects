@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class AddressRetrieverTest {
+class AnAddressRetriever {
     @Test
     void answersAppropriateAddressForValidCoordinates()
         throws IOException {
@@ -28,7 +28,7 @@ class AddressRetrieverTest {
         // END:httpStub
         var retriever = new AddressRetriever(http);
 
-        var address = retriever.retrieve(38.0, -104.0);
+        var address = retriever.retrieve(38, -104);
 
         assertEquals("324", address.house_number());
         assertEquals("Main St", address.road());
