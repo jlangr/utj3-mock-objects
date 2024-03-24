@@ -6,20 +6,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.langrsoft.util.Http;
+import com.langrsoft.util.HttpImpl;
 
 import static java.lang.String.format;
 
 public class AddressRetriever {
     private static final String SERVER = "http://nominatim.openstreetmap.org";
-    // START_HIGHLIGHT
-    private final Http http;
-    // END_HIGHLIGHT
-
-    // START_HIGHLIGHT
-    public AddressRetriever(Http http) {
-        this.http = http;
-        // END_HIGHLIGHT
-    }
 
     public Address retrieve(double latitude, double longitude)
         throws IOException {
@@ -27,7 +19,7 @@ public class AddressRetriever {
         var url = format("%s/reverse?%s&format=json", SERVER, locationParams);
 
         // START_HIGHLIGHT
-        var jsonResponse = http.get(url);
+        var jsonResponse = new HttpImpl().get(url);
         // END_HIGHLIGHT
 
         var response = parseResponse(jsonResponse);
