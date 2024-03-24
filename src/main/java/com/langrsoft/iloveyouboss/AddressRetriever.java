@@ -18,8 +18,8 @@ public class AddressRetriever {
     // START_HIGHLIGHT
     public AddressRetriever(Http http) {
         this.http = http;
-        // END_HIGHLIGHT
     }
+    // END_HIGHLIGHT
 
     public Address retrieve(double latitude, double longitude)
         throws IOException {
@@ -29,9 +29,10 @@ public class AddressRetriever {
         // START_HIGHLIGHT
         var jsonResponse = http.get(url);
         // END_HIGHLIGHT
+
+        var response = parseResponse(jsonResponse);
         // ...
 // END:injection
-        var response = parseResponse(jsonResponse);
 
         var address = response.address();
         var country = address.country_code();
@@ -40,7 +41,6 @@ public class AddressRetriever {
 
         return address;
 // START:injection
-        // ...
     }
     // ...
     // END:injection
