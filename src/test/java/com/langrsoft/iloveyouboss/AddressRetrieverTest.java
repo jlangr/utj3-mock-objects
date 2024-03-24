@@ -19,6 +19,5 @@ class AddressRetrieverTest {
         assertEquals("Colorado", address.state());
         assertEquals("80903", address.postcode());
     }
-    // START:test
 }
 // END:test
