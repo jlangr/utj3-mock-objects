@@ -1,6 +1,5 @@
 package com.langrsoft.iloveyouboss;
 
-// START:AddressRetriever
 import java.io.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -9,6 +8,7 @@ import com.langrsoft.util.Http;
 
 import static java.lang.String.format;
 
+// START:injection
 public class AddressRetriever {
     private static final String SERVER = "http://nominatim.openstreetmap.org";
     // START_HIGHLIGHT
@@ -29,7 +29,8 @@ public class AddressRetriever {
         // START_HIGHLIGHT
         var jsonResponse = http.get(url);
         // END_HIGHLIGHT
-
+        // ...
+// END:injection
         var response = parseResponse(jsonResponse);
 
         var address = response.address();
@@ -38,7 +39,11 @@ public class AddressRetriever {
             throw new UnsupportedOperationException("intl addresses unsupported");
 
         return address;
+// START:injection
+        // ...
     }
+    // ...
+    // END:injection
 
     private Response parseResponse(String jsonResponse)
         throws JsonProcessingException {
@@ -47,4 +52,4 @@ public class AddressRetriever {
         return mapper.readValue(jsonResponse, Response.class);
     }
 }
-// END:AddressRetriever
+// END:injection
