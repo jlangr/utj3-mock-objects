@@ -2,15 +2,7 @@ package com.langrsoft.iloveyouboss;
 
 // START:Address
 public record Address(
-    String road, String city, String state, String zip, String houseNumber) {
-
-    @Override
-    public String toString() {
-        return houseNumber() + " " +
-            road() + ", " +
-            city() + " " +
-            state() + " " +
-            zip();
-    }
+    String road, String city, String state,
+    String country_code, String house_number, String postcode) {
 }
 // END:Address

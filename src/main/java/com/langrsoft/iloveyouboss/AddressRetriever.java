@@ -2,35 +2,49 @@ package com.langrsoft.iloveyouboss;
 
 // START:AddressRetriever
 import java.io.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.langrsoft.util.Http;
 
-import com.langrsoft.util.HttpImpl;
-import org.json.simple.*;
-import org.json.simple.parser.*;
+import static java.lang.String.format;
 
 public class AddressRetriever {
-   public Address retrieve(double latitude, double longitude)
-         throws IOException, ParseException {
-      var parms = String.format("lat=%.6flon=%.6f", latitude, longitude);
-      // START_HIGHLIGHT
-      var response = new HttpImpl().get(
-        "http://open.mapquestapi.com/nominatim/v1/reverse?format=json&"
-        + parms);
-      // END_HIGHLIGHT
+    private static final String SERVER = "http://nominatim.openstreetmap.org";
+    // START_HIGHLIGHT
+    private final Http http;
+    // END_HIGHLIGHT
 
-      var obj = (JSONObject)new JSONParser().parse(response);
+    // START_HIGHLIGHT
+    public AddressRetriever(Http http) {
+        this.http = http;
+        // END_HIGHLIGHT
+    }
 
-      var address = (JSONObject)obj.get("address");
-      var country = (String)address.get("country_code");
-      if (!country.equals("us"))
-         throw new UnsupportedOperationException(
-            "cannot support non-US addresses at this time");
+    public Address retrieve(double latitude, double longitude)
+        throws IOException {
+        var locationParams = format("lat=%.6f&lon=%.6f", latitude, longitude);
+        var url = format("%s/reverse?%s&format=json", SERVER, locationParams);
 
-      var houseNumber = (String)address.get("house_number");
-      var road = (String)address.get("road");
-      var city = (String)address.get("city");
-      var state = (String)address.get("state");
-      var zip = (String)address.get("postcode");
-      return new Address(houseNumber, road, city, state, zip);
-   }
+        // START_HIGHLIGHT
+        var jsonResponse = http.get(url);
+        // END_HIGHLIGHT
+
+        var response = parseResponse(jsonResponse);
+
+        var address = response.address();
+        var country = address.country_code();
+        if (!country.equals("us"))
+            throw new UnsupportedOperationException("intl addresses unsupported");
+
+        return address;
+    }
+
+    private Response parseResponse(String jsonResponse)
+        throws JsonProcessingException {
+        var mapper = new ObjectMapper()
+            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        return mapper.readValue(jsonResponse, Response.class);
+    }
 }
 // END:AddressRetriever
