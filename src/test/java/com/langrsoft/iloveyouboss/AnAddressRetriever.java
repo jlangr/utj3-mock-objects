@@ -49,7 +49,7 @@ class AnAddressRetriever {
     }
     // END:throws
 
-    @Disabled("works as of 2024-Mar-24")
+    @Disabled("surprise!")
     @Tag("slow")
     @Test
     void liveIntegrationTest() throws IOException {

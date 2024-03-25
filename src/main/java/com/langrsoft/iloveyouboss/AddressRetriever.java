@@ -23,7 +23,7 @@ public class AddressRetriever {
 
     public Address retrieve(double latitude, double longitude)
         throws IOException {
-        var locationParams = format("lat=%.6f&lon=%.6f", latitude, longitude);
+        var locationParams = format("lon=%.6f&lat=%.6f", latitude, longitude);
         var url = format("%s/reverse?%s&format=json", SERVER, locationParams);
 
         // START_HIGHLIGHT
