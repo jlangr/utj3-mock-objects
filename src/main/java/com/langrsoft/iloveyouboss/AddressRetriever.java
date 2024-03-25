@@ -8,31 +8,27 @@ import com.langrsoft.util.Http;
 
 import static java.lang.String.format;
 
-// START:injection
 public class AddressRetriever {
     private static final String SERVER = "http://nominatim.openstreetmap.org";
-    // START_HIGHLIGHT
     private final Http http;
-    // END_HIGHLIGHT
 
-    // START_HIGHLIGHT
     public AddressRetriever(Http http) {
         this.http = http;
     }
-    // END_HIGHLIGHT
 
+    // START:test
     public Address retrieve(double latitude, double longitude)
         throws IOException {
-        var locationParams = format("lat=%.6f&lon=%.6f", latitude, longitude);
+        // START_HIGHLIGHT
+        var locationParams = format("lon=%.6f&lat=%.6f", latitude, longitude);
+        // END_HIGHLIGHT
         var url = format("%s/reverse?%s&format=json", SERVER, locationParams);
 
-        // START_HIGHLIGHT
         var jsonResponse = http.get(url);
-        // END_HIGHLIGHT
+        // ...
+        // END:test
 
         var response = parseResponse(jsonResponse);
-        // ...
-// END:injection
 
         var address = response.address();
         var country = address.country_code();
@@ -40,10 +36,9 @@ public class AddressRetriever {
             throw new UnsupportedOperationException("intl addresses unsupported");
 
         return address;
-// START:injection
+        // START:test
     }
-    // ...
-    // END:injection
+    // END:test
 
     private Response parseResponse(String jsonResponse)
         throws JsonProcessingException {
@@ -52,4 +47,3 @@ public class AddressRetriever {
         return mapper.readValue(jsonResponse, Response.class);
     }
 }
-// END:injection

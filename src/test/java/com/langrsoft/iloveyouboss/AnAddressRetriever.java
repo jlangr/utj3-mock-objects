@@ -2,20 +2,23 @@ package com.langrsoft.iloveyouboss;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
-// START:test
 import java.io.*;
 import com.langrsoft.util.*;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 class AnAddressRetriever {
+    // START:test
     @Test
     void answersAppropriateAddressForValidCoordinates()
         throws IOException {
-        // START:httpStub
-        Http http = (String url) ->
-            """
+        Http http = (String url) -> {
+            // START_HIGHLIGHT
+            if (!url.contains("lat=38") ||
+                !url.contains("lon=-104"))
+                fail("url " + url + " does not contain correct params");
+            // END_HIGHLIGHT
+            return """
                 {"address":{
                   "house_number":"324",
                   "road":"Main St",
@@ -24,16 +27,19 @@ class AnAddressRetriever {
                   "postcode":"81234",
                   "country_code":"us"}}
                 """;
-        // END:httpStub
+        };
         var retriever = new AddressRetriever(http);
 
         var address = retriever.retrieve(38, -104);
+        // ...
+        // END:test
 
         assertEquals("324", address.house_number());
         assertEquals("Main St", address.road());
         assertEquals("Anywhere", address.city());
         assertEquals("Colorado", address.state());
         assertEquals("81234", address.postcode());
+        // START:test
     }
 // END:test
 
