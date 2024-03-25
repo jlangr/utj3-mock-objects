@@ -16,17 +16,14 @@ public class AddressRetriever {
         this.http = http;
     }
 
-    // START:test
     public Address retrieve(double latitude, double longitude)
         throws IOException {
-        // START_HIGHLIGHT
+        // START:fix
         var locationParams = format("lat=%.6f&lon=%.6f", latitude, longitude);
-        // END_HIGHLIGHT
+        // END:fix
         var url = format("%s/reverse?%s&format=json", SERVER, locationParams);
 
         var jsonResponse = http.get(url);
-        // ...
-        // END:test
 
         var response = parseResponse(jsonResponse);
 
@@ -36,9 +33,7 @@ public class AddressRetriever {
             throw new UnsupportedOperationException("intl addresses unsupported");
 
         return address;
-        // START:test
     }
-    // END:test
 
     private Response parseResponse(String jsonResponse)
         throws JsonProcessingException {
