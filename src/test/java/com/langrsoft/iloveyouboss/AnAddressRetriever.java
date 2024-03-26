@@ -54,7 +54,9 @@ class AnAddressRetriever {
     // START:throws
     @Test
     void throwsWhenNotUSCountryCode() {
+        // START_HIGHLIGHT
         when(http.get(anyString())).thenReturn("""
+        // END_HIGHLIGHT
             {"address":{ "country_code":"not us"}}""");
         var retriever = new AddressRetriever(http);
 
