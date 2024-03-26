@@ -5,22 +5,24 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.langrsoft.util.Http;
+import com.langrsoft.util.HttpImpl;
 
 import static java.lang.String.format;
 
+// START:class
 public class AddressRetriever {
     private static final String SERVER = "http://nominatim.openstreetmap.org";
-    private final Http http;
+    // START_HIGHLIGHT
+    private Http http = new HttpImpl(); // can't be final
 
-    public AddressRetriever(Http http) {
-        this.http = http;
-    }
+    // no constructor!
+    // END_HIGHLIGHT
 
     public Address retrieve(double latitude, double longitude)
         throws IOException {
-        // START:fix
+        // ...
+// END:class
         var locationParams = format("lat=%.6f&lon=%.6f", latitude, longitude);
-        // END:fix
         var url = format("%s/reverse?%s&format=json", SERVER, locationParams);
 
         var jsonResponse = http.get(url);
@@ -33,7 +35,10 @@ public class AddressRetriever {
             throw new UnsupportedOperationException("intl addresses unsupported");
 
         return address;
+        // START:class
     }
+    // ...
+    // END:class
 
     private Response parseResponse(String jsonResponse)
         throws JsonProcessingException {
@@ -41,4 +46,6 @@ public class AddressRetriever {
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         return mapper.readValue(jsonResponse, Response.class);
     }
+    // START:class
 }
+// END:class

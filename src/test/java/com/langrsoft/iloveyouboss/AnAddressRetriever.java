@@ -7,17 +7,24 @@ import com.langrsoft.util.*;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.contains;
+import static org.mockito.Mockito.when;
 // START:test
 // ...
 // START_HIGHLIGHT
-import static org.mockito.ArgumentMatchers.contains;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.InjectMocks;
+import org.mockito.junit.jupiter.MockitoExtension;
 // END_HIGHLIGHT
 
+@ExtendWith(MockitoExtension.class)
 class AnAddressRetriever {
     // START_HIGHLIGHT
-    Http http = mock(Http.class);
+    @InjectMocks
+    AddressRetriever retriever;
+    @Mock
+    Http http;
     // END_HIGHLIGHT
 
     @Test
@@ -35,7 +42,6 @@ class AnAddressRetriever {
                   "postcode":"81234",
                   "country_code":"us"}}
                 """);
-        var retriever = new AddressRetriever(http);
 
         var address = retriever.retrieve(38, -104);
         // ...
@@ -56,7 +62,6 @@ class AnAddressRetriever {
     void throwsWhenNotUSCountryCode() {
         when(http.get(anyString())).thenReturn("""
             {"address":{ "country_code":"not us"}}""");
-        var retriever = new AddressRetriever(http);
 
         assertThrows(UnsupportedOperationException.class,
             () -> retriever.retrieve(1.0, -1.0));
@@ -67,7 +72,7 @@ class AnAddressRetriever {
     @Tag("slow")
     @Test
     void liveIntegrationTest() throws IOException {
-        var retriever = new AddressRetriever(new HttpImpl());
+        var retriever = new AddressRetriever();
 
         var address = retriever.retrieve(38.8372956, -104.8255679);
 
