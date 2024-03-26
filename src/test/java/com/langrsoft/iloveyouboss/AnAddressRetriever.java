@@ -9,11 +9,12 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 // START:test
 // ...
+// START_HIGHLIGHT
 import static org.mockito.ArgumentMatchers.contains;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+// END_HIGHLIGHT
 
-// START:test
 class AnAddressRetriever {
     // START_HIGHLIGHT
     Http http = mock(Http.class);
@@ -24,6 +25,7 @@ class AnAddressRetriever {
         throws IOException {
         // START_HIGHLIGHT
         when(http.get(contains("lat=38.000000&lon=-104.000000"))).thenReturn(
+        // END_HIGHLIGHT
             """
                 {"address":{
                   "house_number":"324",
@@ -33,7 +35,6 @@ class AnAddressRetriever {
                   "postcode":"81234",
                   "country_code":"us"}}
                 """);
-        // END_HIGHLIGHT
         var retriever = new AddressRetriever(http);
 
         var address = retriever.retrieve(38, -104);
