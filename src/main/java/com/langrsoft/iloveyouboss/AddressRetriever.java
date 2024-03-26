@@ -13,9 +13,11 @@ import static java.lang.String.format;
 public class AddressRetriever {
     private static final String SERVER = "http://nominatim.openstreetmap.org";
     // START_HIGHLIGHT
-    private Http http = new HttpImpl(); // can't be final
+    private Http http = new HttpImpl(); // this cannot be final
+    // END_HIGHLIGHT
 
-    // no constructor!
+    // START_HIGHLIGHT
+    // look ma, no constructor!
     // END_HIGHLIGHT
 
     public Address retrieve(double latitude, double longitude)
