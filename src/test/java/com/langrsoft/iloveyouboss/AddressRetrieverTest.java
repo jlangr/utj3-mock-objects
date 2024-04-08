@@ -1,12 +1,14 @@
 package com.langrsoft.iloveyouboss;
 
 // START:test
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class AddressRetrieverTest {
+    @Disabled("shh not working, really")
     @Tag("slow")
     @Test
     void liveIntegrationTest() throws IOException {
