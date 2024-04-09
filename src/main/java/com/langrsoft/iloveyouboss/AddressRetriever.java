@@ -47,7 +47,7 @@ public class AddressRetriever {
         }
     }
     // END_HIGHLIGHT
-    // END:IMPL
+    // END:impl
 
     private Response parseResponse(String jsonResponse)
         throws JsonProcessingException {
@@ -55,6 +55,4 @@ public class AddressRetriever {
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         return mapper.readValue(jsonResponse, Response.class);
     }
-    // START:class
 }
-// END:class
