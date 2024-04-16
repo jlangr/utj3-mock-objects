@@ -59,7 +59,9 @@ class AnAddressRetriever {
     // START:test
     @Test
     void returnsNullWhenHttpGetThrows() {
+        // START_HIGHLIGHT
         when(http.get(anyString())).thenThrow(RuntimeException.class);
+        // END_HIGHLIGHT
 
         var address = retriever.retrieve(38, -104);
 
