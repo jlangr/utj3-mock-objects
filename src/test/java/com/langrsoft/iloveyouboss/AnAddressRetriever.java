@@ -10,8 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class AnAddressRetriever {
     // START:test
     @Test
-    void answersAppropriateAddressForValidCoordinates()
-        throws IOException {
+    void answersAppropriateAddressForValidCoordinates() {
         Http http = (String url) -> {
             // START_HIGHLIGHT
             if (!url.contains("lat=38") ||

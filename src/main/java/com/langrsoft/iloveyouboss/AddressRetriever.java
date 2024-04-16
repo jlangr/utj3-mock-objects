@@ -17,8 +17,7 @@ public class AddressRetriever {
     }
 
     // START:test
-    public Address retrieve(double latitude, double longitude)
-        throws IOException {
+    public Address retrieve(double latitude, double longitude) {
         // START_HIGHLIGHT
         var locationParams = format("lon=%.6f&lat=%.6f", latitude, longitude);
         // END_HIGHLIGHT
@@ -40,10 +39,13 @@ public class AddressRetriever {
     }
     // END:test
 
-    private Response parseResponse(String jsonResponse)
-        throws JsonProcessingException {
+    private Response parseResponse(String jsonResponse) {
         var mapper = new ObjectMapper()
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        return mapper.readValue(jsonResponse, Response.class);
+        try {
+            return mapper.readValue(jsonResponse, Response.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
