@@ -16,8 +16,7 @@ public class AddressRetriever {
         this.http = http;
     }
 
-    public Address retrieve(double latitude, double longitude)
-        throws IOException {
+    public Address retrieve(double latitude, double longitude) {
         // START:fix
         var locationParams = format("lat=%.6f&lon=%.6f", latitude, longitude);
         // END:fix
@@ -35,10 +34,13 @@ public class AddressRetriever {
         return address;
     }
 
-    private Response parseResponse(String jsonResponse)
-        throws JsonProcessingException {
+    private Response parseResponse(String jsonResponse) {
         var mapper = new ObjectMapper()
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        return mapper.readValue(jsonResponse, Response.class);
+       try {
+          return mapper.readValue(jsonResponse, Response.class);
+       } catch (JsonProcessingException e) {
+          throw new RuntimeException(e);
+       }
     }
 }
