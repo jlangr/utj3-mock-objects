@@ -20,8 +20,7 @@ public class AddressRetriever {
     // look ma, no constructor!
     // END_HIGHLIGHT
 
-    public Address retrieve(double latitude, double longitude)
-        throws IOException {
+    public Address retrieve(double latitude, double longitude) {
         // ...
 // END:class
         var locationParams = format("lat=%.6f&lon=%.6f", latitude, longitude);
@@ -42,11 +41,14 @@ public class AddressRetriever {
     // ...
     // END:class
 
-    private Response parseResponse(String jsonResponse)
-        throws JsonProcessingException {
+    private Response parseResponse(String jsonResponse) {
         var mapper = new ObjectMapper()
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        return mapper.readValue(jsonResponse, Response.class);
+       try {
+          return mapper.readValue(jsonResponse, Response.class);
+       } catch (JsonProcessingException e) {
+          throw new RuntimeException(e);
+       }
     }
     // START:class
 }

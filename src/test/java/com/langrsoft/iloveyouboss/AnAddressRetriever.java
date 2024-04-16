@@ -28,8 +28,7 @@ class AnAddressRetriever {
     // END_HIGHLIGHT
 
     @Test
-    void answersAppropriateAddressForValidCoordinates()
-        throws IOException {
+    void answersAppropriateAddressForValidCoordinates() {
         // START_HIGHLIGHT
         when(http.get(contains("lat=38.000000&lon=-104.000000"))).thenReturn(
         // END_HIGHLIGHT
@@ -71,7 +70,7 @@ class AnAddressRetriever {
     @Disabled("works as of 2024-Mar-24")
     @Tag("slow")
     @Test
-    void liveIntegrationTest() throws IOException {
+    void liveIntegrationTest() {
         var retriever = new AddressRetriever();
 
         var address = retriever.retrieve(38.8372956, -104.8255679);
