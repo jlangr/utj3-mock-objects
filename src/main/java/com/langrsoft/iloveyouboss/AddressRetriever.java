@@ -36,7 +36,8 @@ public class AddressRetriever {
             // START_HIGHLIGHT
             auditor.audit(format("request for country code: %s", country));
             // END_HIGHLIGHT
-            throw new UnsupportedOperationException("intl addresses unsupported");
+            throw new UnsupportedOperationException(
+               "intl addresses unsupported");
         }
 
         return address;

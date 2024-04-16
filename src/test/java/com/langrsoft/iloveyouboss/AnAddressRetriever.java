@@ -14,20 +14,22 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.ArgumentMatchers.any;
 // ...
 // END:test
-
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+// START:test
 @ExtendWith(MockitoExtension.class)
 class AnAddressRetriever {
     @InjectMocks
     AddressRetriever retriever;
     @Mock
-    Http http;
-    @Mock
     Auditor auditor;
+    // ...
+    // END:test
+    @Mock
+    Http http;
 
     @Test
     void answersAppropriateAddressForValidCoordinates() {
