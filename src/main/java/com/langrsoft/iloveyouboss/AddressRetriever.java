@@ -9,35 +9,41 @@ import com.langrsoft.util.HttpImpl;
 
 import static java.lang.String.format;
 
+// START:impl
 public class AddressRetriever {
+    private Auditor auditor = new ApplicationAuditor();
+    // ...
+    // END:impl
     private static final String SERVER = "http://nominatim.openstreetmap.org";
     private Http http = new HttpImpl(); // this cannot be final
 
     // START:impl
     public Address retrieve(double latitude, double longitude)
+    // ...
+    // END:impl
         throws IOException {
         var locationParams = format("lat=%.6f&lon=%.6f", latitude, longitude);
         var url = format("%s/reverse?%s&format=json", SERVER, locationParams);
 
-        // START_HIGHLIGHT
         var jsonResponse = get(url);
         if (jsonResponse == null) return null;
-        // END_HIGHLIGHT
-        // ...
-        // END:impl
 
         var response = parseResponse(jsonResponse);
 
         var address = response.address();
+        // START:impl
         var country = address.country_code();
-        if (!country.equals("us"))
+        if (!country.equals("us")) {
+            // START_HIGHLIGHT
+            auditor.audit(format("request for country code: %s", country));
+            // END_HIGHLIGHT
             throw new UnsupportedOperationException("intl addresses unsupported");
+        }
 
         return address;
-        // START:impl
     }
+    // END:impl
 
-    // START_HIGHLIGHT
     private String get(String url) {
         try {
             return http.get(url);
@@ -46,8 +52,6 @@ public class AddressRetriever {
             return null;
         }
     }
-    // END_HIGHLIGHT
-    // END:impl
 
     private Response parseResponse(String jsonResponse)
         throws JsonProcessingException {
@@ -55,4 +59,7 @@ public class AddressRetriever {
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         return mapper.readValue(jsonResponse, Response.class);
     }
+    // START:impl
+    // ...
 }
+// END:impl

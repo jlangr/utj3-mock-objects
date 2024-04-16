@@ -1,14 +1,21 @@
 package com.langrsoft.iloveyouboss;
 
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.*;
+
 import java.io.*;
 import com.langrsoft.util.*;
-import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.contains;
 import static org.mockito.Mockito.when;
+// START:test
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.ArgumentMatchers.any;
+// ...
+// END:test
+
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.InjectMocks;
@@ -20,6 +27,8 @@ class AnAddressRetriever {
     AddressRetriever retriever;
     @Mock
     Http http;
+    @Mock
+    Auditor auditor;
 
     @Test
     void answersAppropriateAddressForValidCoordinates()
@@ -54,6 +63,32 @@ class AnAddressRetriever {
     }
 
     // START:test
+    @Nested
+    class Auditing {
+        @Test
+        void occursWhenNonUSAddressRetrieved() {
+            when(http.get(anyString())).thenReturn("""
+               {"address":{ "country_code":"not us"}}""");
+
+            try { retriever.retrieve(1.0, -1.0); }
+            catch (Exception expected) {}
+
+            verify(auditor).audit("request for country code: not us");
+        }
+
+        @Test
+        void doesNotOccurForUSCountryCode() throws IOException {
+            when(http.get(anyString())).thenReturn("""
+               {"address":{ "country_code":"us"}}""");
+
+            retriever.retrieve(1.0, -1.0);
+
+            verify(auditor, never()).audit(any());
+        }
+    }
+    // ...
+    // END:test
+
     @Test
     void returnsNullWhenHttpGetThrows() throws IOException {
         when(http.get(anyString())).thenThrow(RuntimeException.class);
@@ -62,7 +97,6 @@ class AnAddressRetriever {
 
         assertNull(address);
     }
-    // END:test
 
     @Disabled("works as of 2024-Mar-24")
     @Tag("slow")
@@ -77,4 +111,6 @@ class AnAddressRetriever {
         assertEquals("Colorado", address.state());
         assertEquals("80903", address.postcode());
     }
+    // START:test
 }
+// END:test
