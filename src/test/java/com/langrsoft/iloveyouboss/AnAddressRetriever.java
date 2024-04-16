@@ -10,8 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class AnAddressRetriever {
     // START:test
     @Test
-    void answersAppropriateAddressForValidCoordinates()
-        throws IOException {
+    void answersAppropriateAddressForValidCoordinates() {
         Http http = (String url) -> {
             // START_HIGHLIGHT
             if (!url.contains("lat=38") ||
@@ -58,7 +57,7 @@ class AnAddressRetriever {
     @Disabled("works as of 2024-Mar-24")
     @Tag("slow")
     @Test
-    void liveIntegrationTest() throws IOException {
+    void liveIntegrationTest() {
         var retriever = new AddressRetriever(new HttpImpl());
 
         var address = retriever.retrieve(38.8372956, -104.8255679);
