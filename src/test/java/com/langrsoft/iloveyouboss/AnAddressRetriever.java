@@ -10,12 +10,17 @@ import static org.mockito.ArgumentMatchers.contains;
 import static org.mockito.Mockito.when;
 // START:test
 // START_HIGHLIGHT
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
-import static org.mockito.ArgumentMatchers.any;
 // END_HIGHLIGHT
 // ...
 // END:test
+// START:test2
+// START_HIGHLIGHT
+import static org.mockito.Mockito.never;
+import static org.mockito.ArgumentMatchers.any;
+// END_HIGHLIGHT
+// ...
+// END:test2
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.InjectMocks;
@@ -82,6 +87,12 @@ class AnAddressRetriever {
             // END_HIGHLIGHT
         }
 
+        private void swallowExpectedException(Runnable r) {
+            try { r.run(); } catch (Exception expected) {}
+        }
+        // END:test
+
+        // START:test2
         @Test
         void doesNotOccurWhenUSAddressRetrieved() {
             when(http.get(anyString())).thenReturn("""
@@ -93,10 +104,8 @@ class AnAddressRetriever {
             verify(auditor, never()).audit(any());
             // END_HIGHLIGHT
         }
-
-        private void swallowExpectedException(Runnable r) {
-            try { r.run(); } catch (Exception expected) {}
-        }
+        // END:test2
+        // START:test
     }
     // ...
     // END:test
