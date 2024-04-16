@@ -9,7 +9,6 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.contains;
 import static org.mockito.Mockito.when;
 // START:test
-// ...
 // START_HIGHLIGHT
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -22,6 +21,7 @@ class AnAddressRetriever {
     // START_HIGHLIGHT
     @InjectMocks
     AddressRetriever retriever;
+
     @Mock
     Http http;
     // END_HIGHLIGHT
