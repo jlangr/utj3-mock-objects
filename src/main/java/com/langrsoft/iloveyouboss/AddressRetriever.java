@@ -18,10 +18,9 @@ public class AddressRetriever {
     private Http http = new HttpImpl(); // this cannot be final
 
     // START:impl
-    public Address retrieve(double latitude, double longitude)
+    public Address retrieve(double latitude, double longitude) {
     // ...
     // END:impl
-        throws IOException {
         var locationParams = format("lat=%.6f&lon=%.6f", latitude, longitude);
         var url = format("%s/reverse?%s&format=json", SERVER, locationParams);
 
@@ -53,11 +52,14 @@ public class AddressRetriever {
         }
     }
 
-    private Response parseResponse(String jsonResponse)
-        throws JsonProcessingException {
+    private Response parseResponse(String jsonResponse) {
         var mapper = new ObjectMapper()
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        return mapper.readValue(jsonResponse, Response.class);
+        try {
+            return mapper.readValue(jsonResponse, Response.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
     // START:impl
     // ...

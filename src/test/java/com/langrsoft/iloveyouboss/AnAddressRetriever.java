@@ -2,7 +2,6 @@ package com.langrsoft.iloveyouboss;
 
 import org.junit.jupiter.api.*;
 
-import java.io.*;
 import com.langrsoft.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -31,8 +30,7 @@ class AnAddressRetriever {
     Auditor auditor;
 
     @Test
-    void answersAppropriateAddressForValidCoordinates()
-        throws IOException {
+    void answersAppropriateAddressForValidCoordinates() {
         when(http.get(contains("lat=38.000000&lon=-104.000000"))).thenReturn(
             """
                 {"address":{
@@ -70,27 +68,34 @@ class AnAddressRetriever {
             when(http.get(anyString())).thenReturn("""
                {"address":{ "country_code":"not us"}}""");
 
-            try { retriever.retrieve(1.0, -1.0); }
-            catch (Exception expected) {}
+            swallowExpectedException(() -> retriever.retrieve(1.0, -1.0));
 
+            // START_HIGHLIGHT
             verify(auditor).audit("request for country code: not us");
+            // END_HIGHLIGHT
         }
 
         @Test
-        void doesNotOccurForUSCountryCode() throws IOException {
+        void doesNotOccurWhenUSAddressRetrieved() {
             when(http.get(anyString())).thenReturn("""
                {"address":{ "country_code":"us"}}""");
 
             retriever.retrieve(1.0, -1.0);
 
+            // START_HIGHLIGHT
             verify(auditor, never()).audit(any());
+            // END_HIGHLIGHT
+        }
+
+        private void swallowExpectedException(Runnable r) {
+            try { r.run(); } catch (Exception expected) {}
         }
     }
     // ...
     // END:test
 
     @Test
-    void returnsNullWhenHttpGetThrows() throws IOException {
+    void returnsNullWhenHttpGetThrows() {
         when(http.get(anyString())).thenThrow(RuntimeException.class);
 
         var address = retriever.retrieve(38, -104);
@@ -101,7 +106,7 @@ class AnAddressRetriever {
     @Disabled("works as of 2024-Mar-24")
     @Tag("slow")
     @Test
-    void liveIntegrationTest() throws IOException {
+    void liveIntegrationTest() {
         var retriever = new AddressRetriever();
 
         var address = retriever.retrieve(38.8372956, -104.8255679);
