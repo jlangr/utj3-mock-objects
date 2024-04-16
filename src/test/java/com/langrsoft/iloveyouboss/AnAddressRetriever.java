@@ -11,8 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class AnAddressRetriever {
     @Test
-    void answersAppropriateAddressForValidCoordinates()
-        throws IOException {
+    void answersAppropriateAddressForValidCoordinates() {
         // START:httpStub
         Http http = (String url) ->
             """
@@ -52,7 +51,7 @@ class AnAddressRetriever {
     @Disabled("surprise!")
     @Tag("slow")
     @Test
-    void liveIntegrationTest() throws IOException {
+    void liveIntegrationTest() {
         var retriever = new AddressRetriever(new HttpImpl());
 
         var address = retriever.retrieve(38.8372956, -104.8255679);
