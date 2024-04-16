@@ -5,7 +5,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.langrsoft.util.HttpImpl;
-import java.io.IOException;
 import static java.lang.String.format;
 
 public class AddressRetriever {
