@@ -1,17 +1,17 @@
 package com.langrsoft.iloveyouboss;
 
-import java.io.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.langrsoft.util.Http;
 import com.langrsoft.util.HttpImpl;
-
 import static java.lang.String.format;
 
 // START:impl
 public class AddressRetriever {
+    // START_HIGHLIGHT
     private Auditor auditor = new ApplicationAuditor();
+    // END_HIGHLIGHT
     // ...
     // END:impl
     private static final String SERVER = "http://nominatim.openstreetmap.org";
