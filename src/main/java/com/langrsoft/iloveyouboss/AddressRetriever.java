@@ -24,7 +24,7 @@ public class AddressRetriever {
         var locationParams = format("lat=%.6f&lon=%.6f", latitude, longitude);
         var url = format("%s/reverse?%s&format=json", SERVER, locationParams);
 
-        var jsonResponse = get(url);
+        var jsonResponse = http.get(url);
         if (jsonResponse == null) return null;
 
         var response = parseResponse(jsonResponse);
@@ -42,15 +42,6 @@ public class AddressRetriever {
         return address;
     }
     // END:impl
-
-    private String get(String url) {
-        try {
-            return http.get(url);
-        }
-        catch (Exception e) {
-            return null;
-        }
-    }
 
     private Response parseResponse(String jsonResponse) {
         var mapper = new ObjectMapper()

@@ -94,15 +94,6 @@ class AnAddressRetriever {
     // ...
     // END:test
 
-    @Test
-    void returnsNullWhenHttpGetThrows() {
-        when(http.get(anyString())).thenThrow(RuntimeException.class);
-
-        var address = retriever.retrieve(38, -104);
-
-        assertNull(address);
-    }
-
     @Disabled("works as of 2024-Mar-24")
     @Tag("slow")
     @Test
