@@ -26,6 +26,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 class AnAddressRetriever {
     @InjectMocks
     AddressRetriever retriever;
+
     // START_HIGHLIGHT
     @Mock
     Auditor auditor;
