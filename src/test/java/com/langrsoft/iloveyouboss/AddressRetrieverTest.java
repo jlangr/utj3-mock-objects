@@ -11,7 +11,7 @@ class AddressRetrieverTest {
     @Disabled("shh not working, really")
     @Tag("slow")
     @Test
-    void liveIntegrationTest() throws IOException {
+    void liveIntegrationTest() {
         var retriever = new AddressRetriever();
 
         var address = retriever.retrieve(38.8372956, -104.8255679);
