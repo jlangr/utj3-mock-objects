@@ -1,6 +1,5 @@
 package com.langrsoft.iloveyouboss;
 
-import java.io.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,8 +11,6 @@ import static java.lang.String.format;
 // START:impl
 public class AddressRetriever {
     private Auditor auditor = new ApplicationAuditor();
-    // ...
-    // END:impl
     private static final String SERVER = "http://nominatim.openstreetmap.org";
     private Http http = new HttpImpl(); // this cannot be final
 
@@ -24,24 +21,37 @@ public class AddressRetriever {
         var locationParams = format("lat=%.6f&lon=%.6f", latitude, longitude);
         var url = format("%s/reverse?%s&format=json", SERVER, locationParams);
 
-        var jsonResponse = http.get(url);
+        // START:impl
+        var jsonResponse = get(url);
         if (jsonResponse == null) return null;
+        // ...
+        // END:impl
 
         var response = parseResponse(jsonResponse);
 
         var address = response.address();
-        // START:impl
         var country = address.country_code();
         if (!country.equals("us")) {
-            // START_HIGHLIGHT
             auditor.audit(format("request for country code: %s", country));
-            // END_HIGHLIGHT
             throw new UnsupportedOperationException("intl addresses unsupported");
         }
 
         return address;
+        // START:impl
     }
+
+    // START_HIGHLIGHT
+    private String get(String url) {
+        try {
+            return http.get(url);
+        }
+        catch (Exception e) {
+            return null;
+        }
+    }
+    // END_HIGHLIGHT
     // END:impl
+
 
     private Response parseResponse(String jsonResponse) {
         var mapper = new ObjectMapper()

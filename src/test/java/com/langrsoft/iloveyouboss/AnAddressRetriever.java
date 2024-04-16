@@ -8,13 +8,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.contains;
 import static org.mockito.Mockito.when;
-// START:test
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.ArgumentMatchers.any;
-// ...
-// END:test
-
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.InjectMocks;
@@ -61,6 +57,16 @@ class AnAddressRetriever {
     }
 
     // START:test
+    @Test
+    void returnsNullWhenHttpGetThrows() {
+        when(http.get(anyString())).thenThrow(RuntimeException.class);
+
+        var address = retriever.retrieve(38, -104);
+
+        assertNull(address);
+    }
+    // END:test
+
     @Nested
     class Auditing {
         @Test
@@ -70,9 +76,7 @@ class AnAddressRetriever {
 
             swallowExpectedException(() -> retriever.retrieve(1.0, -1.0));
 
-            // START_HIGHLIGHT
             verify(auditor).audit("request for country code: not us");
-            // END_HIGHLIGHT
         }
 
         @Test
@@ -82,17 +86,13 @@ class AnAddressRetriever {
 
             retriever.retrieve(1.0, -1.0);
 
-            // START_HIGHLIGHT
             verify(auditor, never()).audit(any());
-            // END_HIGHLIGHT
         }
 
         private void swallowExpectedException(Runnable r) {
             try { r.run(); } catch (Exception expected) {}
         }
     }
-    // ...
-    // END:test
 
     @Disabled("works as of 2024-Mar-24")
     @Tag("slow")
@@ -107,6 +107,4 @@ class AnAddressRetriever {
         assertEquals("Colorado", address.state());
         assertEquals("80903", address.postcode());
     }
-    // START:test
 }
-// END:test
