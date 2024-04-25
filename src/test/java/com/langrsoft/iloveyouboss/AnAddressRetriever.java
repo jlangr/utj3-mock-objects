@@ -72,24 +72,24 @@ class AnAddressRetriever {
             () -> retriever.retrieve(1.0, -1.0));
     }
 
-    // START:test
     @Nested
     class Auditing {
-        @Test
-        void occursWhenNonUSAddressRetrieved() {
-            when(http.get(anyString())).thenReturn("""
-               {"address":{ "country_code":"not us"}}""");
+        // START:test
+    @Test
+    void occursWhenNonUSAddressRetrieved() {
+        when(http.get(anyString())).thenReturn("""
+           {"address":{ "country_code":"not us"}}""");
 
-            swallowExpectedException(() -> retriever.retrieve(1.0, -1.0));
+        swallowExpectedException(() -> retriever.retrieve(1.0, -1.0));
 
-            // START_HIGHLIGHT
-            verify(auditor).audit("request for country code: not us");
-            // END_HIGHLIGHT
-        }
+        // START_HIGHLIGHT
+        verify(auditor).audit("request for country code: not us");
+        // END_HIGHLIGHT
+    }
 
-        private void swallowExpectedException(Runnable r) {
-            try { r.run(); } catch (Exception expected) {}
-        }
+    private void swallowExpectedException(Runnable r) {
+        try { r.run(); } catch (Exception expected) {}
+    }
         // END:test
 
         // START:test2
@@ -105,8 +105,8 @@ class AnAddressRetriever {
             // END_HIGHLIGHT
         }
         // END:test2
-        // START:test
     }
+    // START:test
     // ...
     // END:test
 
