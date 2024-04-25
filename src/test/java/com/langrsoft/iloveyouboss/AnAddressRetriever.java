@@ -92,19 +92,19 @@ class AnAddressRetriever {
     }
         // END:test
 
-        // START:test2
-        @Test
-        void doesNotOccurWhenUSAddressRetrieved() {
-            when(http.get(anyString())).thenReturn("""
-               {"address":{ "country_code":"us"}}""");
+    // START:test2
+    @Test
+    void doesNotOccurWhenUSAddressRetrieved() {
+        when(http.get(anyString())).thenReturn("""
+           {"address":{ "country_code":"us"}}""");
 
-            retriever.retrieve(1.0, -1.0);
+        retriever.retrieve(1.0, -1.0);
 
-            // START_HIGHLIGHT
-            verify(auditor, never()).audit(any());
-            // END_HIGHLIGHT
-        }
-        // END:test2
+        // START_HIGHLIGHT
+        verify(auditor, never()).audit(any());
+        // END_HIGHLIGHT
+    }
+    // END:test2
     }
     // START:test
     // ...
