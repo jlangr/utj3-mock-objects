@@ -10,7 +10,7 @@ import static java.lang.String.format;
 // START:impl
 public class AddressRetriever {
     // START_HIGHLIGHT
-    private Auditor auditor = new StandInProductionAuditor();
+    private Auditor auditor = new ApplicationAuditor();
     // END_HIGHLIGHT
     // ...
     // END:impl
