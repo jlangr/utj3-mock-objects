@@ -1,4 +1,4 @@
-package com.langrsoft.iloveyouboss;
+package com.langrsoft.domain;
 
 // START:AddressRetriever
 import com.fasterxml.jackson.core.JsonProcessingException;
