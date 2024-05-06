@@ -1,16 +1,18 @@
-package com.langrsoft.iloveyouboss;
+package com.langrsoft.domain;
 
+import com.langrsoft.util.Http;
+import com.langrsoft.util.HttpImpl;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
-import com.langrsoft.util.*;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class AnAddressRetriever {
     // START:test
     @Test
     void answersAppropriateAddressForValidCoordinates() {
-        Http http = (String url) -> {
+        Http http = url -> {
             // START_HIGHLIGHT
             if (!url.contains("lat=38") ||
                 !url.contains("lon=-104"))
@@ -44,7 +46,7 @@ class AnAddressRetriever {
     // START:throws
     @Test
     void throwsWhenNotUSCountryCode() {
-        Http http = (String url) -> """
+        Http http = _ -> """
             {"address":{ "country_code":"not us"}}""";
         var retriever = new AddressRetriever(http);
 
@@ -56,7 +58,7 @@ class AnAddressRetriever {
     @Disabled("works as of 2024-Mar-24")
     @Tag("slow")
     @Test
-    void liveIntegrationTest() throws IOException {
+    void liveIntegrationTest() {
         var retriever = new AddressRetriever(new HttpImpl());
 
         var address = retriever.retrieve(38.8372956, -104.8255679);
