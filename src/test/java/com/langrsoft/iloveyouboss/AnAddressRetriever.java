@@ -12,7 +12,7 @@ class AnAddressRetriever {
     @Test
     void answersAppropriateAddressForValidCoordinates() {
         // START:httpStub
-        Http http = (String url) ->
+        Http http = (String _) ->
             """
                 {"address":{
                   "house_number":"324",
