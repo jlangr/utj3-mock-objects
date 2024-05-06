@@ -1,4 +1,4 @@
-package com.langrsoft.iloveyouboss;
+package com.langrsoft.domain;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
