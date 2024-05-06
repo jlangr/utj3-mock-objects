@@ -27,7 +27,6 @@ import org.mockito.Mock;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-// START:test
 @ExtendWith(MockitoExtension.class)
 class AnAddressRetriever {
     @InjectMocks
