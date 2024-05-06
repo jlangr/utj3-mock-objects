@@ -1,4 +1,4 @@
-package com.langrsoft.iloveyouboss;
+package com.langrsoft.domain;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
@@ -12,7 +12,7 @@ class AnAddressRetriever {
     @Test
     void answersAppropriateAddressForValidCoordinates() {
         // START:httpStub
-        Http http = (String _) ->
+        Http http = _ ->
             """
                 {"address":{
                   "house_number":"324",
@@ -38,7 +38,7 @@ class AnAddressRetriever {
     // START:throws
     @Test
     void throwsWhenNotUSCountryCode() {
-        Http http = (String url) -> """
+        Http http = _ -> """
             {"address":{ "country_code":"not us"}}""";
         var retriever = new AddressRetriever(http);
 

@@ -1,4 +1,4 @@
-package com.langrsoft.iloveyouboss;
+package com.langrsoft.domain;
 
 public record Response(Address address) {
 }
