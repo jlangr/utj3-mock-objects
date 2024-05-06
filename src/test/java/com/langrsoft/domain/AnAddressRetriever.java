@@ -5,6 +5,7 @@ import org.junit.jupiter.api.*;
 import com.langrsoft.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.AdditionalMatchers.and;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.contains;
 import static org.mockito.Mockito.when;
@@ -32,19 +33,15 @@ class AnAddressRetriever {
     @InjectMocks
     AddressRetriever retriever;
 
-    // START_HIGHLIGHT
     @Mock
     Auditor auditor;
-    // END_HIGHLIGHT
-    // ...
-    // END:test
     @Mock
     Http http;
 
     @Test
     void answersAppropriateAddressForValidCoordinates() {
-        when(http.get(contains("lat=38.000000&lon=-104.000000"))).thenReturn(
-            """
+        when(http.get(and(contains("lat=38.000000"), contains("lon=-104.000000"))))
+           .thenReturn("""
                 {"address":{
                   "house_number":"324",
                   "road":"Main St",
