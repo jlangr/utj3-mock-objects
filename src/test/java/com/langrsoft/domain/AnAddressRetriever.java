@@ -5,10 +5,12 @@ import org.junit.jupiter.api.Tag;
 import com.langrsoft.util.*;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.AdditionalMatchers.and;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.contains;
 import static org.mockito.Mockito.when;
 // START:test
+// ...
 // START_HIGHLIGHT
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -16,22 +18,27 @@ import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 // END_HIGHLIGHT
 
+// START_HIGHLIGHT
 @ExtendWith(MockitoExtension.class)
+   // END_HIGHLIGHT
 class AnAddressRetriever {
     // START_HIGHLIGHT
     @InjectMocks
     AddressRetriever retriever;
+    // END_HIGHLIGHT
 
+    // START_HIGHLIGHT
     @Mock
     Http http;
     // END_HIGHLIGHT
 
     @Test
     void answersAppropriateAddressForValidCoordinates() {
-        // START_HIGHLIGHT
-        when(http.get(contains("lat=38.000000&lon=-104.000000"))).thenReturn(
-        // END_HIGHLIGHT
-            """
+        when(http.get(and(contains("lat=38.000000"),
+                          contains("lon=-104.000000"))))
+           // ...
+           // END:test
+           .thenReturn("""
                 {"address":{
                   "house_number":"324",
                   "road":"Main St",
@@ -42,8 +49,6 @@ class AnAddressRetriever {
                 """);
 
         var address = retriever.retrieve(38, -104);
-        // ...
-        // END:test
 
         assertEquals("324", address.house_number());
         assertEquals("Main St", address.road());
