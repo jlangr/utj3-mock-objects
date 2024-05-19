@@ -5,8 +5,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.langrsoft.util.Http;
 
-import static java.lang.String.format;
-
+// START:injection
 public class AddressRetriever {
     private static final String SERVER = "http://nominatim.openstreetmap.org";
     private final Http http;
@@ -17,10 +16,8 @@ public class AddressRetriever {
 
     // START:test
     public Address retrieve(double latitude, double longitude) {
-        // START_HIGHLIGHT
-        var locationParams = format("lon=%.6f&lat=%.6f", latitude, longitude);
-        // END_HIGHLIGHT
-        var url = format("%s/reverse?%s&format=json", SERVER, locationParams);
+        var locationParams = "lon=%.6f&lat=%.6f".formatted(latitude, longitude);
+        var url = "%s/reverse?%s&format=json".formatted(SERVER, locationParams);
 
         var jsonResponse = http.get(url);
         // ...
