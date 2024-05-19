@@ -5,14 +5,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.langrsoft.util.HttpImpl;
-import static java.lang.String.format;
 
 public class AddressRetriever {
     private static final String SERVER = "http://nominatim.openstreetmap.org";
 
     public Address retrieve(double latitude, double longitude) {
-        var locationParams = format("lon=%.6f&lat=%.6f", latitude, longitude);
-        var url = format("%s/reverse?%s&format=json", SERVER, locationParams);
+        var locationParams = "lon=%.6f&lat=%.6f".formatted(latitude, longitude);
+        var url = "%s/reverse?%s&format=json".formatted(SERVER, locationParams);
 
         // START_HIGHLIGHT
         var jsonResponse = new HttpImpl().get(url);
