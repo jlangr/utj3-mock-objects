@@ -6,8 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.langrsoft.util.Http;
 import com.langrsoft.util.HttpImpl;
 
-import static java.lang.String.format;
-
 // START:impl
 public class AddressRetriever {
     private Auditor auditor = new ApplicationAuditor();
@@ -18,8 +16,8 @@ public class AddressRetriever {
     public Address retrieve(double latitude, double longitude) {
     // ...
     // END:impl
-        var locationParams = format("lat=%.6f&lon=%.6f", latitude, longitude);
-        var url = format("%s/reverse?%s&format=json", SERVER, locationParams);
+        var locationParams = "lat=%.6f&lon=%.6f".formatted(latitude, longitude);
+        var url = "%s/reverse?%s&format=json".formatted(SERVER, locationParams);
 
         // START:impl
         var jsonResponse = get(url);
@@ -32,7 +30,7 @@ public class AddressRetriever {
         var address = response.address();
         var country = address.country_code();
         if (!country.equals("us")) {
-            auditor.audit(format("request for country code: %s", country));
+            auditor.audit("request for country code: %s".formatted(country));
             throw new UnsupportedOperationException("intl addresses unsupported");
         }
 
