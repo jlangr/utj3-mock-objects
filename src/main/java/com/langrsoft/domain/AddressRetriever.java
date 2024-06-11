@@ -13,7 +13,7 @@ public class AddressRetriever {
     // END_HIGHLIGHT
     // ...
     // END:impl
-    private static final String SERVER = "http://nominatim.openstreetmap.org";
+    private static final String SERVER = "https://nominatim.openstreetmap.org";
     private Http http = new HttpImpl(); // this cannot be final
 
     // START:impl
