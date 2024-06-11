@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.langrsoft.util.HttpImpl;
 
 public class AddressRetriever {
-    private static final String SERVER = "http://nominatim.openstreetmap.org";
+    private static final String SERVER = "https://nominatim.openstreetmap.org";
 
     public Address retrieve(double latitude, double longitude) {
         var locationParams = "lon=%.6f&lat=%.6f".formatted(latitude, longitude);
