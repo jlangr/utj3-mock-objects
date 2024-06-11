@@ -8,6 +8,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse.BodyHandlers;
 
 public class HttpImpl implements Http {
+  @Override
   public String get(String url) {
     try (var client = HttpClient.newHttpClient()) {
       var request = HttpRequest.newBuilder().uri(URI.create(url)).build();
