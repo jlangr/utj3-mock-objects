@@ -9,7 +9,7 @@ import com.langrsoft.util.HttpImpl;
 // START:impl
 public class AddressRetriever {
     private Auditor auditor = new ApplicationAuditor();
-    private static final String SERVER = "http://nominatim.openstreetmap.org";
+    private static final String SERVER = "https://nominatim.openstreetmap.org";
     private Http http = new HttpImpl(); // this cannot be final
 
     // START:impl
