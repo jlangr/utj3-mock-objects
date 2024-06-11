@@ -16,7 +16,7 @@ public class AddressRetriever {
 
     public Address retrieve(double latitude, double longitude) {
         // START:fix
-        var locationParams = "lon=%.6f&lat=%.6f".formatted(latitude, longitude);
+        var locationParams = "lat=%.6f&lon=%.6f".formatted(latitude, longitude);
         // END:fix
         var url = "%s/reverse?%s&format=json".formatted(SERVER, locationParams);
 
