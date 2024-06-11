@@ -55,7 +55,7 @@ class AnAddressRetriever {
     }
     // END:throws
 
-    @Disabled("works as of 2024-Mar-24")
+    @Disabled("calls successfully as of 2024-Jun-11")
     @Tag("slow")
     @Test
     void liveIntegrationTest() {
