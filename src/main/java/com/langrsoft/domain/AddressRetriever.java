@@ -7,7 +7,7 @@ import com.langrsoft.util.Http;
 
 // START:injection
 public class AddressRetriever {
-    private static final String SERVER = "http://nominatim.openstreetmap.org";
+    private static final String SERVER = "https://nominatim.openstreetmap.org";
     private final Http http;
 
     public AddressRetriever(Http http) {
@@ -15,7 +15,9 @@ public class AddressRetriever {
     }
 
     public Address retrieve(double latitude, double longitude) {
-        var locationParams = "lon=%.6f&lat=%.6f".formatted(latitude, longitude);
+        // START:fix
+        var locationParams = "lat=%.6f&lon=%.6f".formatted(latitude, longitude);
+        // END:fix
         var url = "%s/reverse?%s&format=json".formatted(SERVER, locationParams);
 
         var jsonResponse = http.get(url);
