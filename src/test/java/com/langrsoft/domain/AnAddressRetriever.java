@@ -62,7 +62,7 @@ class AnAddressRetriever {
          () -> retriever.retrieve(1.0, -1.0));
    }
 
-   @Disabled("works as of 2024-Mar-24")
+   @Disabled("retrieves as of 2024-Jun-11")
    @Tag("slow")
    @Test
    void liveIntegrationTest() {
