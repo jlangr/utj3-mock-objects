@@ -7,7 +7,7 @@ import com.langrsoft.util.Http;
 
 // START:injection
 public class AddressRetriever {
-    private static final String SERVER = "http://nominatim.openstreetmap.org";
+    private static final String SERVER = "https://nominatim.openstreetmap.org";
     private final Http http;
 
     public AddressRetriever(Http http) {

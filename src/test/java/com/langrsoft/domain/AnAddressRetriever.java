@@ -44,7 +44,7 @@ class AnAddressRetriever {
     // START:throws
     @Test
     void throwsWhenNotUSCountryCode() {
-        Http http = _ -> """
+        Http http = url -> """
             {"address":{ "country_code":"not us"}}""";
         var retriever = new AddressRetriever(http);
 
@@ -53,7 +53,7 @@ class AnAddressRetriever {
     }
     // END:throws
 
-    @Disabled("works as of 2024-Mar-24")
+    @Disabled("retrieves as of 2024-Jun-11")
     @Tag("slow")
     @Test
     void liveIntegrationTest() {
