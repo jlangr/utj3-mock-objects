@@ -12,7 +12,7 @@ class AnAddressRetriever {
     @Test
     void answersAppropriateAddressForValidCoordinates() {
         // START:httpStub
-        Http http = _ ->
+        Http http = url ->
             """
                 {"address":{
                   "house_number":"324",
@@ -38,7 +38,7 @@ class AnAddressRetriever {
     // START:throws
     @Test
     void throwsWhenNotUSCountryCode() {
-        Http http = _ -> """
+        Http http = url -> """
             {"address":{ "country_code":"not us"}}""";
         var retriever = new AddressRetriever(http);
 
