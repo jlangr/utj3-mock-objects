@@ -71,19 +71,19 @@ class AnAddressRetriever {
     }
     // END:throws
 
-    @Disabled("works as of 2024-Mar-24")
-    @Tag("slow")
-    @Test
-    void liveIntegrationTest() {
-        var retriever = new AddressRetriever();
+   @Disabled("retrieves as of 2024-Jun-11")
+   @Tag("slow")
+   @Test
+   void liveIntegrationTest() {
+       var retriever = new AddressRetriever();
 
-        var address = retriever.retrieve(38.8372956, -104.8255679);
+       var address = retriever.retrieve(38.8372956, -104.8255679);
 
-        assertEquals("North Cascade Avenue", address.road());
-        assertEquals("Colorado Springs", address.city());
-        assertEquals("Colorado", address.state());
-        assertEquals("80903", address.postcode());
-    }
+       assertEquals("North Cascade Avenue", address.road());
+       assertEquals("Colorado Springs", address.city());
+       assertEquals("Colorado", address.state());
+       assertEquals("80903", address.postcode());
+   }
     // START:test
 }
 // END:test
