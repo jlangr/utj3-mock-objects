@@ -72,9 +72,10 @@ class AnAddressRetriever {
       @Test
       void occursWhenNonUSAddressRetrieved() {
          when(http.get(anyString())).thenReturn("""
-            {"address":{ "country_code":"not us"}}""");
+           {"address":{ "country_code":"not us"}}""");
 
-         swallowExpectedException(() -> retriever.retrieve(1.0, -1.0));
+         assertThrows(UnsupportedOperationException.class,
+            () -> retriever.retrieve(1.0, -1.0));
 
          verify(auditor).audit("request for country code: not us");
       }
