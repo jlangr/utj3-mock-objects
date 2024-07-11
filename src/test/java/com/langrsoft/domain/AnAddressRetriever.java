@@ -76,17 +76,14 @@ class AnAddressRetriever {
         when(http.get(anyString())).thenReturn("""
            {"address":{ "country_code":"not us"}}""");
 
-        swallowExpectedException(() -> retriever.retrieve(1.0, -1.0));
+        assertThrows(UnsupportedOperationException.class,
+           () -> retriever.retrieve(1.0, -1.0));
 
         // START_HIGHLIGHT
         verify(auditor).audit("request for country code: not us");
         // END_HIGHLIGHT
     }
-
-    private void swallowExpectedException(Runnable r) {
-        try { r.run(); } catch (Exception expected) {}
-    }
-        // END:test
+    // END:test
 
     // START:test2
     @Test
