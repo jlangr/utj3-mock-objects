@@ -20,7 +20,9 @@ public class AddressRetriever {
         var url = "%s/reverse?%s&format=json".formatted(SERVER, locationParams);
 
         // START:impl
+        // START_HIGHLIGHT
         var jsonResponse = get(url);
+        // END_HIGHLIGHT
         if (jsonResponse == null) return null;
         // ...
         // END:impl
