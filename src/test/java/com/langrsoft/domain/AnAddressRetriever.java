@@ -70,7 +70,7 @@ class AnAddressRetriever {
    @Nested
    class Auditing {
       @Test
-      void occursWhenNonUSAddressRetrieved() {
+      void auditsWhenNonUSAddressRetrieved() {
          when(http.get(anyString())).thenReturn("""
            {"address":{ "country_code":"not us"}}""");
 
@@ -81,7 +81,7 @@ class AnAddressRetriever {
       }
 
       @Test
-      void doesNotOccurWhenUSAddressRetrieved() {
+      void doesNotAuditWhenUSAddressRetrieved() {
          when(http.get(anyString())).thenReturn("""
             {"address":{ "country_code":"us"}}""");
 
