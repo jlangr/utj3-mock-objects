@@ -72,7 +72,7 @@ class AnAddressRetriever {
     class Auditing {
         // START:test
     @Test
-    void occursWhenNonUSAddressRetrieved() {
+    void auditsWhenNonUSAddressRetrieved() {
         when(http.get(anyString())).thenReturn("""
            {"address":{ "country_code":"not us"}}""");
 
