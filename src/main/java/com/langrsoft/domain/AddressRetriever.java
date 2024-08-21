@@ -8,7 +8,8 @@ import com.langrsoft.util.HttpImpl;
 
 // START:class
 public class AddressRetriever {
-    private static final String SERVER = "https://nominatim.openstreetmap.org";
+    private static final String SERVER =
+       "https://nominatim.openstreetmap.org";
     // START_HIGHLIGHT
     private Http http = new HttpImpl(); // this cannot be final
     // END_HIGHLIGHT
